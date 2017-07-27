@@ -66,8 +66,7 @@
     });
         
     for (i = 0;i < lenght;i++){
-    console.log(files[i]);
-    send_files.append("files",files[i]);
+    send_files.append("file[]",files[i]);
     }
     
     $.ajax ({
@@ -77,7 +76,7 @@
       contentType: false,
       processData: false,
       data : send_files,
-      success: function(data){alert(data);}
+      success: function(data){console.log(data);}
     });
         
     }
