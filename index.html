@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    
+    <style>
+         @import url('https://fonts.googleapis.com/css?family=Ubuntu'); 
+        .dropbox{border:10px dashed #b9b9b9;width:600px;height:300px;border-radius: 10px;display:flex;flex-direction:column;justify-content: center;align-items: center;}
+        .text{font-family: 'Ubuntu', sans-serif;}
+        .hover{background-color: #747474;}
+        .hide{display: none;}
+    </style>
+    
+    <link rel="stylesheet" href="JQuery_ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="JQuery_ui/jquery-ui.theme.min.css">
+    <script src="JQuery/jquery-3.2.1.min.js"></script>
+    <script src="JQuery_ui/jquery-ui.min.js"></script>
+</head>
+<body>
+   
+    <form enctype="multipart/form-data"  method="post" name="uploader">
+    <div id="file_container" class="dropbox">
+       <h3 class="text">Нажмите на кнопку</h3>
+       <input type="button" value="Выбрать файл(ы)" id="file_field">
+       <br>
+       <input type="button" value="отправить" id="send">
+       <input type="file" id="file" class="hide" multiple="true" name="file_list">
+       <h3 class="text">Или перетащите файл в box</h3>
+   </div>
+   </form>
+   
+   <div id="dialog">
+       Пожалуйста , дождитесь окончания загрузки.
+    </div>
+   
+   <script>
+    //добавление ui
+    $("#file_field").button();
+    $("#send").button();
+    $("#dialog").dialog({
+        title: 'Загрузка',
+        autoOpen: false,
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true
+    });
+       
+    //преобразование box
+    $("#file_container").on('dragover',function(event) {
+    $("#file_container").addClass('hover');
+    return false;});
+    $("#file_container").on('dragleave',function(event) {
+    $("#file_container").removeClass('hover');
+    return false;});
+    
+    //загрузка
+    function upload(files,lenght){
+    var send_files = new FormData();
+        
+    //отладочная информация об файлах
+    console.log("количество отправленых файлов: "+lenght);
+    $.each(files,function(key,value){
+    console.log(key+" "+value.name);    
+    });
+        
+    for (i = 0;i < lenght;i++){
+    console.log(files[i]);
+    send_files.append("files",files[i]);
+    }
+    
+    $.ajax ({
+      type : 'POST',
+      url: 'download.php',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data : send_files,
+      success: function(data){alert(data);}
+    });
+        
+    }
+       
+    //drag and drop
+    $("#file_container").on('drop',function(event){
+    event.preventDefault();
+    event.stopPropagation();
+    upload(event.originalEvent.dataTransfer.files,event.originalEvent.dataTransfer.files.length);
+    $("#file_container").removeClass('hover');
+    });
+       
+    //default upload
+    $("#file_field").on("click",function(){
+    $("#file").trigger("click");
+    });
+    
+    $("#send").click(function(){
+     upload($("#file").prop('files'),$("#file").prop('files').length);
+    });
+       
+    //обработка ошибок
+    function error (data) {
+        
+    }
+       
+       
+   </script>
+   
+</body>
+</html>
