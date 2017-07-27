@@ -1,11 +1,11 @@
 <?php
  //параметры загрузки файла
- $uploaddir = "/var/www/work.site/vk_bot/";
+ $uploaddir = " ";
  $fileName = basename($_FILES["files"]["name"][0]);
  $uploadfile = $uploaddir . $fileName;
  
  //загрузка файла
- //move_uploaded_file($_FILES["files"]["tmp_name"][0], $uploadfile);
+ move_uploaded_file($_FILES["files"]["tmp_name"][0], $uploadfile);
 
  //отчёт
  print_r($_FILES);
