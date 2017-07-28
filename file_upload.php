@@ -1,6 +1,6 @@
 <?php
  //директория загрузки файла
- $uploaddir = "/var/www/work.site/vk_bot/download/";
+ $uploaddir = " ";
  
  
 
