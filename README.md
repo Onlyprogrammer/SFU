@@ -1,5 +1,5 @@
 # SFU
-![Alt-Изображение](https://github.com/Onlyprogrammer/SFU/blob/master/image.png "main picture")
+![Изображение](https://github.com/Onlyprogrammer/SFU/blob/master/image.png "Main picture")
 
 **SFU** - (***S**imple **F**iles **U**ploader*) загрузчик файлов на сервер 
 # Описание :
